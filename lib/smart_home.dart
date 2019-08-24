@@ -130,12 +130,11 @@ class _SmartHomeState extends State<SmartHome> {
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Icon(
-                              Icons.verified_user,
-                              color: Colors.white,
-                              size: 18.0,
+                            Image(
+                              image: AssetImage('images/thermometer.png'),
+                              width: 20.0,
                             ),
                             Text(
                               "26",
@@ -155,18 +154,21 @@ class _SmartHomeState extends State<SmartHome> {
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
                           children: <Widget>[
-                            Icon(Icons.verified_user,
-                                color: Colors.white, size: 18.0),
+                            Image(
+                              image: AssetImage('images/plug.png'),
+                              width: 20.0,
+                            ),
                             Text(
-                              "26",
+                              "54",
                               style: kMeasureTextStyle.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              "ºc",
+                              " kWh",
                               style: kUnitsTextStyle.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -177,18 +179,21 @@ class _SmartHomeState extends State<SmartHome> {
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
                           children: <Widget>[
-                            Icon(Icons.verified_user,
-                                color: Colors.white, size: 18.0),
+                            Image(
+                              image: AssetImage('images/humidity.png'),
+                              width: 20.0,
+                            ),
                             Text(
-                              "26",
+                              "61",
                               style: kMeasureTextStyle.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              "ºc",
+                              "%",
                               style: kUnitsTextStyle.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -200,7 +205,7 @@ class _SmartHomeState extends State<SmartHome> {
                   ),
                   // Room info and last activity details
                   SizedBox(
-                    height: 40.0,
+                    height: 50.0,
                   ),
                   Row(
                     children: <Widget>[
@@ -214,6 +219,7 @@ class _SmartHomeState extends State<SmartHome> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            SizedBox(height: 8.0,),
                             Text(
                               "Last activity 14 min ago",
                               style: kActivityInfoTextStyle,

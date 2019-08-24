@@ -9,6 +9,7 @@ Color kDisarmedShadowColor = Color(0xFFBAF5E0);
 var kTextSize = 12.0;
 var k16TextSize = 16.0;
 var kMedTextSize = 18.0;
+var k20TextSize = 20.0;
 var kBigTextSize = 24.0;
 
 TextStyle kAppBarStyle = TextStyle(
@@ -28,7 +29,7 @@ TextStyle kNotificationBarIconStyle = TextStyle(
 );
 
 TextStyle kMeasureTextStyle = TextStyle(
-  fontSize: k16TextSize,
+  fontSize: k20TextSize,
   color: Colors.white
 );
 
@@ -37,9 +38,14 @@ TextStyle kUnitsTextStyle = TextStyle(
   color: Colors.white
 );
 
+TextStyle kMedTextStyle = TextStyle(
+    fontSize: kMedTextSize,
+    color: Colors.white
+);
+
 TextStyle kBigTextStyle = TextStyle(
-  fontSize: kBigTextSize,
-  color: Colors.white
+    fontSize: kBigTextSize,
+    color: Colors.white
 );
 
 TextStyle kActivityInfoTextStyle = TextStyle(
