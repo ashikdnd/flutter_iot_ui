@@ -5,6 +5,7 @@ Color kAlertColor = Color(0xFFD83F52);
 Color kDarkTextColor = Color(0xFF4A4A4A);
 Color kLightTextColor = Color(0xFF909090);
 Color kDisarmedShadowColor = Color(0xFFBAF5E0);
+Color kArmedShadowColor = Color(0xFFED9AA4);
 
 var kTextSize = 12.0;
 var k16TextSize = 16.0;
@@ -50,6 +51,6 @@ TextStyle kBigTextStyle = TextStyle(
 
 TextStyle kActivityInfoTextStyle = TextStyle(
   fontSize: kTextSize,
-  color: Colors.white,
+  color: Colors.grey[350],
   fontWeight: FontWeight.bold
 );

@@ -7,6 +7,28 @@ class SmartHome extends StatefulWidget {
 }
 
 class _SmartHomeState extends State<SmartHome> {
+  String securityStatusText;
+  Color securityStatusColor;
+  double securityStatusBorderRadius;
+  Color securityStatusShadowColor;
+
+  void initState() {
+    super.initState();
+    securityStatusText = "Security system disarmed";
+    securityStatusColor = kPrimaryColor;
+    securityStatusBorderRadius = 3.0;
+    securityStatusShadowColor = kDisarmedShadowColor;
+  }
+
+  void enableSecurity() {
+    setState(() {
+      securityStatusColor = kAlertColor;
+      securityStatusText = "Security system armed";
+      securityStatusBorderRadius = 15.0;
+      securityStatusShadowColor = kArmedShadowColor;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,21 +84,23 @@ class _SmartHomeState extends State<SmartHome> {
                 top: 12.0,
                 bottom: 12.0,
               ),
-              duration: Duration(milliseconds: 500),
+              duration: Duration(milliseconds: 800),
+              curve: Curves.fastOutSlowIn,
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: kDisarmedShadowColor,
-                      offset: Offset(
-                        0.0,
-                        2.0,
-                      ),
-                      blurRadius: 8.0,
-                      spreadRadius: 2.0,
-                    )
-                  ],
-                  color: kPrimaryColor,
-                  borderRadius: BorderRadius.circular(15.0)),
+                boxShadow: [
+                  BoxShadow(
+                    color: securityStatusShadowColor,
+                    offset: Offset(
+                      0.0,
+                      2.5,
+                    ),
+                    blurRadius: 5.0,
+                    spreadRadius: 1.0,
+                  )
+                ],
+                color: securityStatusColor,
+                borderRadius: BorderRadius.circular(securityStatusBorderRadius),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -89,153 +113,271 @@ class _SmartHomeState extends State<SmartHome> {
                     width: 10.0,
                   ),
                   Text(
-                    "Security system disarmed",
+                    securityStatusText,
                     style: kNotificationBarTextStyle,
                   ),
                 ],
               ),
             ),
             // Room Block
-            Container(
-              margin: EdgeInsets.only(top: 20.0),
-              padding: EdgeInsets.only(
-                  left: 20.0, top: 35.0, right: 20.0, bottom: 15.0),
-              width: double.infinity,
-              height: 180.0,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(
-                      0.0,
-                      1.0,
+            Column(
+              children: <Widget>[
+                // Room Overview
+                Container(
+                  margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                  padding: EdgeInsets.only(
+                      left: 20.0, top: 35.0, right: 20.0, bottom: 15.0),
+                  width: double.infinity,
+                  height: 180.0,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(
+                          0.0,
+                          1.0,
+                        ),
+                        blurRadius: 4.0,
+                        spreadRadius: 0.5,
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(15.0),
+                    image: DecorationImage(
+                      image: AssetImage('images/living-room.jpg'),
+                      colorFilter: new ColorFilter.mode(
+                        Colors.black.withOpacity(0.9),
+                        BlendMode.dstATop,
+                      ),
+                      fit: BoxFit.cover,
                     ),
-                    blurRadius: 4.0,
-                    spreadRadius: 0.5,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(15.0),
-                image: DecorationImage(
-                  image: AssetImage('images/living-room.jpg'),
-                  colorFilter: new ColorFilter.mode(
-                      Colors.black.withOpacity(0.95), BlendMode.dstATop),
-                  fit: BoxFit.cover,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      // Measures and units
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: <Widget>[
+                                Image(
+                                  image: AssetImage('images/thermometer.png'),
+                                  width: 20.0,
+                                ),
+                                Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.baseline,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  children: <Widget>[
+                                    Text(
+                                      "26 ",
+                                      style: kMeasureTextStyle.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "ºc",
+                                      style: kMeasureTextStyle,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: <Widget>[
+                                Image(
+                                  image: AssetImage('images/plug.png'),
+                                  width: 20.0,
+                                ),
+                                Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.baseline,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  children: <Widget>[
+                                    Text(
+                                      "54 ",
+                                      style: kMeasureTextStyle.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "kWh",
+                                      style: kUnitsTextStyle.copyWith(
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: <Widget>[
+                                Image(
+                                  image: AssetImage('images/humidity.png'),
+                                  width: 20.0,
+                                ),
+                                Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.baseline,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  children: <Widget>[
+                                    Text(
+                                      "61 ",
+                                      style: kMeasureTextStyle.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "%",
+                                      style: kUnitsTextStyle.copyWith(
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      // Room info and last activity details
+                      SizedBox(
+                        height: 50.0,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Living Room",
+                                  style: kBigTextStyle.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8.0,
+                                ),
+                                Text(
+                                  "Last activity 14 min ago",
+                                  style: kActivityInfoTextStyle,
+                                )
+                              ],
+                            ),
+                          ),
+                          Icon(
+                            Icons.settings,
+                            color: Colors.white,
+                            size: 30.0,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              child: Column(
-                children: <Widget>[
-                  // Measures and units
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Image(
-                              image: AssetImage('images/thermometer.png'),
-                              width: 20.0,
-                            ),
-                            Text(
-                              "26",
-                              style: kMeasureTextStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "ºc",
-                              style: kUnitsTextStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
+                // Room settings
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  direction: Axis.horizontal,
+                  spacing: 10.0,
+                  runSpacing: 5.0,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      height: 80.0,
+                      margin: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.only(
+                        top: 12.0,
+                        bottom: 12.0,
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: <Widget>[
-                            Image(
-                              image: AssetImage('images/plug.png'),
-                              width: 20.0,
-                            ),
-                            Text(
-                              "54",
-                              style: kMeasureTextStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              " kWh",
-                              style: kUnitsTextStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1.0, color: Colors.grey[300]),
+                        borderRadius: BorderRadius.circular(4.0),
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: <Widget>[
-                            Image(
-                              image: AssetImage('images/humidity.png'),
-                              width: 20.0,
-                            ),
-                            Text(
-                              "61",
-                              style: kMeasureTextStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "%",
-                              style: kUnitsTextStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          ],
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.lightbulb_outline),
+                          Text("Lights"),
+                          Text("Off")
+                        ],
                       ),
-                    ],
-                  ),
-                  // Room info and last activity details
-                  SizedBox(
-                    height: 50.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Living Room",
-                              style: kBigTextStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 8.0,),
-                            Text(
-                              "Last activity 14 min ago",
-                              style: kActivityInfoTextStyle,
-                            )
-                          ],
-                        ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      height: 80.0,
+                      margin: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.only(
+                        top: 12.0,
+                        bottom: 12.0,
                       ),
-                      Icon(
-                        Icons.settings,
-                        color: Colors.white,
-                        size: 30.0,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1.0, color: Colors.grey[300]),
+                        borderRadius: BorderRadius.circular(4.0),
                       ),
-                    ],
-                  )
-                ],
-              ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.lightbulb_outline),
+                          Text("Lights"),
+                          Text("Off")
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      height: 80.0,
+                      margin: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.only(
+                        top: 12.0,
+                        bottom: 12.0,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1.0, color: Colors.grey[300]),
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.lightbulb_outline),
+                          Text("Lights"),
+                          Text("Off")
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      height: 80.0,
+                      margin: EdgeInsets.all(4.0),
+                      padding: EdgeInsets.only(
+                        top: 12.0,
+                        bottom: 12.0,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1.0, color: Colors.grey[300]),
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.lightbulb_outline),
+                          Text("Lights"),
+                          Text("Off")
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(),
+              ],
             )
           ],
         ),
