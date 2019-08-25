@@ -6,6 +6,9 @@ Color kDarkTextColor = Color(0xFF4A4A4A);
 Color kLightTextColor = Color(0xFF909090);
 Color kDisarmedShadowColor = Color(0xFFBAF5E0);
 Color kArmedShadowColor = Color(0xFFED9AA4);
+Color kBgColor = Color(0xFFFAFAFA);
+Color kActiveDeviceColor = kPrimaryColor;
+Color kInactiveDeviceColor = Color(0xFFA4A4A4);
 
 var kTextSize = 12.0;
 var k16TextSize = 16.0;
@@ -26,12 +29,10 @@ TextStyle kNotificationBarTextStyle = TextStyle(
 
 TextStyle kNotificationBarIconStyle = TextStyle(
   fontSize: kTextSize,
-  color: Colors.white
 );
 
 TextStyle kMeasureTextStyle = TextStyle(
   fontSize: k20TextSize,
-  color: Colors.white
 );
 
 TextStyle kUnitsTextStyle = TextStyle(
@@ -41,16 +42,18 @@ TextStyle kUnitsTextStyle = TextStyle(
 
 TextStyle kMedTextStyle = TextStyle(
     fontSize: kMedTextSize,
-    color: Colors.white
 );
 
 TextStyle kBigTextStyle = TextStyle(
     fontSize: kBigTextSize,
-    color: Colors.white
 );
 
 TextStyle kActivityInfoTextStyle = TextStyle(
-  fontSize: kTextSize,
-  color: Colors.grey[350],
-  fontWeight: FontWeight.bold
+    fontSize: kTextSize,
+    color: Colors.grey[350],
+    fontWeight: FontWeight.bold
+);
+
+TextStyle deviceNameTextStyle = TextStyle(
+    fontSize: k16TextSize,
 );
