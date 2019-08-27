@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+int kSecurityTimeout = 5;
+
 Color kPrimaryColor = Color(0xFF21D99A);
 Color kAlertColor = Color(0xFFD83F52);
 Color kDarkTextColor = Color(0xFF4A4A4A);
@@ -19,6 +21,12 @@ var kBigTextSize = 24.0;
 TextStyle kAppBarStyle = TextStyle(
   fontSize: kBigTextSize,
   fontWeight: FontWeight.bold,
+);
+
+TextStyle kAlertTextStyle = TextStyle(
+  fontSize: kBigTextSize,
+  fontWeight: FontWeight.bold,
+  color: kAlertColor
 );
 
 TextStyle kNotificationBarTextStyle = TextStyle(
@@ -56,4 +64,5 @@ TextStyle kActivityInfoTextStyle = TextStyle(
 
 TextStyle deviceNameTextStyle = TextStyle(
     fontSize: k16TextSize,
+    color: kInactiveDeviceColor,
 );

@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: kBgColor,
         accentColor: Color(0xFF21D99A),
         textTheme: TextTheme(
-          headline:  TextStyle(fontSize: 12.0, color: kDarkTextColor),
-          title:  TextStyle(fontSize: 24.0, color: kDarkTextColor),
-          body1: TextStyle(fontSize: 12.0, color: kDarkTextColor),
+          headline:  TextStyle(fontSize: 12.0, color: kDarkTextColor, fontFamily: 'Product Sans'),
+          title:  TextStyle(fontSize: 24.0, color: kDarkTextColor, fontFamily: 'Product Sans'),
+          body1: TextStyle(fontSize: 12.0, color: kDarkTextColor, fontFamily: 'Product Sans'),
         ),
       ),
       home: SmartHome(),
