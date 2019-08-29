@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,6 +17,7 @@ class _SmartHomeState extends State<SmartHome>
   double securityStatusBorderRadius;
   Color securityStatusShadowColor;
   IconData securityIcon;
+  bool securityEnabled = false;
 
   AnimationController controller;
   Animation<Offset> offset;
@@ -39,23 +40,13 @@ class _SmartHomeState extends State<SmartHome>
 
   }
 
-  void enableSecurity() {
-    setState(() {
-      securityIcon = Icons.lock_outline;
-      securityStatusColor = kAlertColor;
-      securityStatusText = "Security system armed";
-      securityStatusBorderRadius = 15.0;
-      securityStatusShadowColor = kArmedShadowColor;
-    });
-  }
-
   void triggerSecurityTimer() {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
       oneSec,
         (Timer timer) => setState(
           () {
-          if (_securityCountdown < 1) {
+          if (_securityCountdown == 1) {
             timer.cancel();
             toggleAnimation('hide');
             enableSecurity();
@@ -68,6 +59,17 @@ class _SmartHomeState extends State<SmartHome>
     );
   }
 
+  void enableSecurity() {
+    setState(() {
+      securityIcon = Icons.lock_outline;
+      securityStatusColor = kAlertColor;
+      securityStatusText = "Security system armed";
+      securityStatusBorderRadius = 15.0;
+      securityStatusShadowColor = kArmedShadowColor;
+      securityEnabled = true;
+    });
+  }
+
   void disableSecurity() {
     setState(() {
       securityIcon = Icons.lock_open;
@@ -75,13 +77,22 @@ class _SmartHomeState extends State<SmartHome>
       securityStatusColor = kPrimaryColor;
       securityStatusBorderRadius = 3.0;
       securityStatusShadowColor = kDisarmedShadowColor;
+      securityEnabled = false;
     });
   }
 
-  void toggleAnimation(type) {
-    if(controller.status == AnimationStatus.dismissed && type == 'show') {
-      controller.forward();
-      triggerSecurityTimer();
+  bool toggleAnimation(type) {
+    if(type == 'show') {
+      if(securityEnabled == true) {
+        print('Running first IF');
+        disableSecurity();
+        return false;
+      }
+      if(controller.status == AnimationStatus.dismissed && securityEnabled == false) {
+        print('Security: $securityEnabled');
+        controller.forward();
+        triggerSecurityTimer();
+      }
     }
 
     if(controller.status == AnimationStatus.completed && type == 'hide') {
