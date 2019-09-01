@@ -63,6 +63,6 @@ TextStyle kActivityInfoTextStyle = TextStyle(
 );
 
 TextStyle deviceNameTextStyle = TextStyle(
-    fontSize: k16TextSize,
+    fontSize: kTextSize,
     color: kInactiveDeviceColor,
 );
