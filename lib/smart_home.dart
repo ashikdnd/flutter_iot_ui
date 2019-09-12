@@ -37,15 +37,14 @@ class _SmartHomeState extends State<SmartHome>
 
     disableSecurity();
     _securityCountdown = kSecurityTimeout;
-
   }
 
   void triggerSecurityTimer() {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
       oneSec,
-        (Timer timer) => setState(
-          () {
+      (Timer timer) => setState(
+        () {
           if (_securityCountdown == 1) {
             timer.cancel();
             toggleAnimation('hide');
@@ -82,20 +81,21 @@ class _SmartHomeState extends State<SmartHome>
   }
 
   bool toggleAnimation(type) {
-    if(type == 'show') {
-      if(securityEnabled == true) {
+    if (type == 'show') {
+      if (securityEnabled == true) {
         print('Running first IF');
         disableSecurity();
         return false;
       }
-      if(controller.status == AnimationStatus.dismissed && securityEnabled == false) {
+      if (controller.status == AnimationStatus.dismissed &&
+          securityEnabled == false) {
         print('Security: $securityEnabled');
         controller.forward();
         triggerSecurityTimer();
       }
     }
 
-    if(controller.status == AnimationStatus.completed && type == 'hide') {
+    if (controller.status == AnimationStatus.completed && type == 'hide') {
       disableSecurity();
       _timer.cancel();
       _securityCountdown = kSecurityTimeout;
@@ -121,17 +121,20 @@ class _SmartHomeState extends State<SmartHome>
         backgroundColor: kBgColor,
         elevation: 0,
         leading: Icon(Icons.menu),
-        title: RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                text: "Smart  ",
-                style: kAppBarStyle.copyWith(color: kPrimaryColor),
-              ),
-              TextSpan(
-                  text: "Home",
-                  style: kAppBarStyle.copyWith(color: kDarkTextColor))
-            ],
+        title: Center(
+          child: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  text: "Smart  ",
+                  style: kAppBarStyle.copyWith(color: kPrimaryColor),
+                ),
+                TextSpan(
+                    text: "Home",
+                    style: kAppBarStyle.copyWith(
+                        color: kDarkTextColor, fontWeight: FontWeight.normal))
+              ],
+            ),
           ),
         ),
         actions: <Widget>[
@@ -156,6 +159,7 @@ class _SmartHomeState extends State<SmartHome>
             children: <Widget>[
               Column(
                 children: <Widget>[
+                  // Security
                   GestureDetector(
                     onTap: () {
                       toggleAnimation('show');
@@ -197,6 +201,80 @@ class _SmartHomeState extends State<SmartHome>
                           Text(
                             securityStatusText,
                             style: kNotificationBarTextStyle,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Devices status
+                  AnimatedContainer(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey[300],
+                          width: 1.0,
+                          style: BorderStyle.solid
+                        )
+                      )
+                    ),
+                    duration: Duration(milliseconds: 800),
+                    curve: Curves.fastOutSlowIn,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              SvgPicture.asset(
+                                'images/cloud_connection.svg',
+                                height: 20.0,
+                                color: Colors.grey[700],
+                              ),
+                              SizedBox(
+                                width: 15.0,
+                              ),
+                              Expanded(
+                                child: Text("Cloud server connection"),
+                              ),
+                              Text("45 Mb/s")
+                            ],
+                          ),
+                          SizedBox(height: 8.0,),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              SvgPicture.asset(
+                                'images/battery_level.svg',
+                                height: 20.0,
+                                color: Colors.grey[700],
+                              ),
+                              SizedBox(
+                                width: 15.0,
+                              ),
+                              Expanded(
+                                child: Text("Backup battery level"),
+                              ),
+                              Text("97%")
+                            ],
+                          ),
+                          SizedBox(height: 8.0,),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              SvgPicture.asset(
+                                'images/sensor.svg',
+                                height: 20.0,
+                                color: Colors.grey[700],
+                              ),
+                              SizedBox(
+                                width: 15.0,
+                              ),
+                              Expanded(
+                                child: Text("Active sensors"),
+                              ),
+                              Text("17 / 17")
+                            ],
                           ),
                         ],
                       ),
@@ -346,6 +424,7 @@ class _SmartHomeState extends State<SmartHome>
                               height: 50.0,
                             ),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 Expanded(
                                   child: Column(
@@ -371,7 +450,7 @@ class _SmartHomeState extends State<SmartHome>
                                 Icon(
                                   Icons.settings,
                                   color: Colors.white,
-                                  size: 30.0,
+                                  size: 22.0,
                                 ),
                               ],
                             )
@@ -383,12 +462,43 @@ class _SmartHomeState extends State<SmartHome>
                         alignment: WrapAlignment.center,
                         direction: Axis.horizontal,
                         children: <Widget>[
-                          Device(icon: 'light-bulb.svg', label: 'Lights', color: Color(0xFFA4A4A4), statusText: 'Off', rotationValue: 2,),
-                          Device(icon: 'air-con.svg', label: 'Air Con.', color: Color(0xFFA4A4A4), statusText: 'Off',),
-                          Device(icon: 'webcam.svg', label: 'Camera', color: Color(0xFFA4A4A4), statusText: 'Off',),
-                          Device(icon: 'television.svg', label: 'TV', color: Color(0xFFA4A4A4), statusText: 'Off',),
-                          Device(icon: 'window.svg', label: 'Window', color: Color(0xFFA4A4A4), statusText: 'Off',),
-                          Device(icon: 'speaker.svg', label: 'Speaker', color: Color(0xFFA4A4A4), statusText: 'Off',),
+                          Device(
+                            icon: 'light-bulb.svg',
+                            label: 'Lights',
+                            color: Color(0xFFA4A4A4),
+                            statusText: 'Off',
+                            rotationValue: 2,
+                          ),
+                          Device(
+                            icon: 'air-con.svg',
+                            label: 'Air Con.',
+                            color: Color(0xFFA4A4A4),
+                            statusText: 'Off',
+                          ),
+                          Device(
+                            icon: 'webcam.svg',
+                            label: 'Camera',
+                            color: Color(0xFFA4A4A4),
+                            statusText: 'Off',
+                          ),
+                          Device(
+                            icon: 'television.svg',
+                            label: 'TV',
+                            color: Color(0xFFA4A4A4),
+                            statusText: 'Off',
+                          ),
+                          Device(
+                            icon: 'window.svg',
+                            label: 'Window',
+                            color: Color(0xFFA4A4A4),
+                            statusText: 'Off',
+                          ),
+                          Device(
+                            icon: 'speaker.svg',
+                            label: 'Speaker',
+                            color: Color(0xFFA4A4A4),
+                            statusText: 'Off',
+                          ),
                         ],
                       ),
                       Divider(),
