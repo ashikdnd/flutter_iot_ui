@@ -18,6 +18,7 @@ class _SmartHomeState extends State<SmartHome>
   Color securityStatusShadowColor;
   IconData securityIcon;
   bool securityEnabled = false;
+  double deviceStatusHeight;
 
   AnimationController controller;
   Animation<Offset> offset;
@@ -67,6 +68,11 @@ class _SmartHomeState extends State<SmartHome>
       securityStatusShadowColor = kArmedShadowColor;
       securityEnabled = true;
     });
+    Future.delayed(Duration(milliseconds: 1500), () {
+      setState(() {
+        deviceStatusHeight = 100.0;
+      });
+    });
   }
 
   void disableSecurity() {
@@ -77,6 +83,7 @@ class _SmartHomeState extends State<SmartHome>
       securityStatusBorderRadius = 3.0;
       securityStatusShadowColor = kDisarmedShadowColor;
       securityEnabled = false;
+      deviceStatusHeight = 0;
     });
   }
 
@@ -208,13 +215,14 @@ class _SmartHomeState extends State<SmartHome>
                   ),
                   // Devices status
                   AnimatedContainer(
+                    height: deviceStatusHeight,
                     decoration: BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
                           color: Colors.grey[300],
                           width: 1.0,
                           style: BorderStyle.solid
-                        )
+                        ),
                       )
                     ),
                     duration: Duration(milliseconds: 800),
@@ -223,58 +231,62 @@ class _SmartHomeState extends State<SmartHome>
                       padding: EdgeInsets.all(8.0),
                       child: Column(
                         children: <Widget>[
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              SvgPicture.asset(
-                                'images/cloud_connection.svg',
-                                height: 20.0,
-                                color: Colors.grey[700],
-                              ),
-                              SizedBox(
-                                width: 15.0,
-                              ),
-                              Expanded(
-                                child: Text("Cloud server connection"),
-                              ),
-                              Text("45 Mb/s")
-                            ],
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                SvgPicture.asset(
+                                  'images/cloud_connection.svg',
+                                  height: 20.0,
+                                  color: Colors.grey[700],
+                                ),
+                                SizedBox(
+                                  width: 15.0,
+                                ),
+                                Expanded(
+                                  child: Text("Cloud server connection"),
+                                ),
+                                Text("45 Mb/s")
+                              ],
+                            ),
                           ),
-                          SizedBox(height: 8.0,),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              SvgPicture.asset(
-                                'images/battery_level.svg',
-                                height: 20.0,
-                                color: Colors.grey[700],
-                              ),
-                              SizedBox(
-                                width: 15.0,
-                              ),
-                              Expanded(
-                                child: Text("Backup battery level"),
-                              ),
-                              Text("97%")
-                            ],
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                SvgPicture.asset(
+                                  'images/battery_level.svg',
+                                  height: 20.0,
+                                  color: Colors.grey[700],
+                                ),
+                                SizedBox(
+                                  width: 15.0,
+                                ),
+                                Expanded(
+                                  child: Text("Backup battery level"),
+                                ),
+                                Text("97%")
+                              ],
+                            ),
                           ),
-                          SizedBox(height: 8.0,),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              SvgPicture.asset(
-                                'images/sensor.svg',
-                                height: 20.0,
-                                color: Colors.grey[700],
-                              ),
-                              SizedBox(
-                                width: 15.0,
-                              ),
-                              Expanded(
-                                child: Text("Active sensors"),
-                              ),
-                              Text("17 / 17")
-                            ],
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                SvgPicture.asset(
+                                  'images/sensor.svg',
+                                  height: 20.0,
+                                  color: Colors.grey[700],
+                                ),
+                                SizedBox(
+                                  width: 15.0,
+                                ),
+                                Expanded(
+                                  child: Text("Active sensors"),
+                                ),
+                                Text("17 / 17")
+                              ],
+                            ),
                           ),
                         ],
                       ),
