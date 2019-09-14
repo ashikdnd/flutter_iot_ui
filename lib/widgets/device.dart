@@ -3,7 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iot/constants.dart';
 
 class Device extends StatelessWidget {
-  Device({@required this.icon, @required this.label, @required this.color, @required this.statusText, this.rotationValue});
+  Device(
+      {@required this.icon,
+      @required this.label,
+      @required this.color,
+      @required this.statusText,
+      this.rotationValue});
 
   final String icon;
   final String label;
@@ -21,8 +26,7 @@ class Device extends StatelessWidget {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-          border: Border.all(
-              width: 1.0, color: Colors.grey[300]),
+          border: Border.all(width: 1.0, color: Colors.grey[300]),
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white),
       child: Column(
@@ -41,7 +45,7 @@ class Device extends StatelessWidget {
           ),
           Text(
             label,
-            style: deviceNameTextStyle.copyWith(
+            style: kDeviceNameTextStyle.copyWith(
               fontWeight: FontWeight.bold,
               color: color,
             ),
@@ -51,7 +55,7 @@ class Device extends StatelessWidget {
           ),
           Text(
             statusText,
-            style: deviceNameTextStyle.copyWith(
+            style: kDeviceNameTextStyle.copyWith(
               color: color,
             ),
           )

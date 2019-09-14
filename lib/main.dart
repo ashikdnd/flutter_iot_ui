@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'smart_home.dart';
 import 'constants.dart';
+import 'package:provider/provider.dart';
+import 'package:iot/providers/security.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +23,10 @@ class MyApp extends StatelessWidget {
           body1: TextStyle(fontSize: 12.0, color: kDarkTextColor, fontFamily: 'Product Sans'),
         ),
       ),
-      home: SmartHome(),
+      home: ChangeNotifierProvider<Security>(
+        builder: (_) => Security(false),
+        child: SmartHome(),
+      ),
     );
   }
 }

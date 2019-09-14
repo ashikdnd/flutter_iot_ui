@@ -62,7 +62,10 @@ TextStyle kActivityInfoTextStyle = TextStyle(
     fontWeight: FontWeight.bold
 );
 
-TextStyle deviceNameTextStyle = TextStyle(
+TextStyle kDeviceNameTextStyle = TextStyle(
     fontSize: kTextSize,
     color: kInactiveDeviceColor,
 );
+
+String kSecurityDisarmedStatusText = "Security system disarmed";
+String kSecurityArmedStatusText = "Security system armed";
