@@ -182,7 +182,7 @@ class _RoomOverviewState extends State<RoomOverview> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "${widget.roomName} is ${security.getStatus()}",
+                      "${widget.roomName}",
                       style: kBigTextStyle.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),

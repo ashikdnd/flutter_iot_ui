@@ -23,7 +23,6 @@ class _SmartHomeState extends State<SmartHome>
   double securityStatusBorderRadius = 3.0;
   Color securityStatusShadowColor = kDisarmedShadowColor;
   IconData securityIcon = Icons.lock_open;
-  bool securityEnabled = false;
   double deviceStatusHeight = 0;
 
   AnimationController controller;
@@ -71,12 +70,6 @@ class _SmartHomeState extends State<SmartHome>
       securityStatusText = kSecurityArmedStatusText;
       securityStatusBorderRadius = 15.0;
       securityStatusShadowColor = kArmedShadowColor;
-      securityEnabled = true;
-    });
-    Future.delayed(Duration(milliseconds: 1500), () {
-      setState(() {
-        deviceStatusHeight = 100.0;
-      });
     });
     Provider.of<Security>(context).updateStatus(true);
   }
@@ -88,20 +81,19 @@ class _SmartHomeState extends State<SmartHome>
       securityStatusColor = kPrimaryColor;
       securityStatusBorderRadius = 3.0;
       securityStatusShadowColor = kDisarmedShadowColor;
-      securityEnabled = false;
-      deviceStatusHeight = 0;
     });
     Provider.of<Security>(context).updateStatus(false);
   }
 
   bool toggleAnimation(type) {
+    var sec = Provider.of<Security>(context);
     if (type == 'show') {
-      if (securityEnabled == true) {
+      if (sec.getStatus() == true) {
         disableSecurity();
         return false;
       }
       if (controller.status == AnimationStatus.dismissed &&
-          securityEnabled == false) {
+          sec.getStatus() == false) {
         controller.forward();
         triggerSecurityTimer();
       }
@@ -222,7 +214,7 @@ class _SmartHomeState extends State<SmartHome>
                     ),
                   ),
                   // Devices status
-                  DeviceStatuses(deviceStatusHeight: deviceStatusHeight),
+                  DeviceStatuses(),
                   SizedBox(height: 10.0,),
                   // Rooms
                   ListView.builder(
@@ -234,7 +226,7 @@ class _SmartHomeState extends State<SmartHome>
                         // Room Overview
                         rooms[i],
                         // Room settings
-                        securityEnabled == false ? GridView.count(
+                        security.getStatus() == false ? GridView.count(
                           padding: EdgeInsets.only(bottom: 2.0),
                           crossAxisCount: 3,
                           crossAxisSpacing: 4.0,

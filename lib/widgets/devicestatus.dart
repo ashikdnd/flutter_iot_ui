@@ -1,16 +1,38 @@
 import 'package:flutter/material.dart';
-import'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:iot/providers/security.dart';
 
-class DeviceStatuses extends StatelessWidget {
+class DeviceStatuses extends StatefulWidget {
+  @override
+  _DeviceStatusesState createState() => _DeviceStatusesState();
+}
 
-  DeviceStatuses({@required this.deviceStatusHeight});
+class _DeviceStatusesState extends State<DeviceStatuses> {
 
-  final double deviceStatusHeight;
+  double deviceListHeight;
 
   @override
   Widget build(BuildContext context) {
+    final security = Provider.of<Security>(context);
+
+    void getHeight() {
+      bool status = security.getStatus();
+      if(status == true) {
+        Future.delayed(Duration(milliseconds: 1500), () {
+          setState(() {
+            deviceListHeight = 100.0;
+          });
+        });
+      } else {
+        deviceListHeight = 0.0;
+      }
+    }
+
+    getHeight();
+
     return AnimatedContainer(
-      height: deviceStatusHeight,
+      height: deviceListHeight,
       decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
