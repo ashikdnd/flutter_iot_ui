@@ -9,14 +9,16 @@ var rooms = [
     roomImg: 'living-room.jpg',
     lastActivity: '15 min',
     locked: false,
+    opacity: 0.9
   ),
   RoomOverview(
     temperature: 21,
     power: 64,
     humidity: 58,
     roomName: 'Bed Room',
-    roomImg: 'living-room.jpg',
+    roomImg: 'bed-room.jpg',
     lastActivity: '6 min',
     locked: false,
+    opacity: 0.90,
   ),
 ];

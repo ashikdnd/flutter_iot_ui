@@ -13,6 +13,7 @@ class RoomOverview extends StatefulWidget {
     @required this.roomImg,
     @required this.lastActivity,
     @required this.locked,
+    @required this.opacity,
   });
 
   final int temperature;
@@ -21,6 +22,7 @@ class RoomOverview extends StatefulWidget {
   final String roomName;
   final String roomImg;
   final String lastActivity;
+  final double opacity;
   bool locked;
 
   @override
@@ -54,7 +56,7 @@ class _RoomOverviewState extends State<RoomOverview> {
         image: DecorationImage(
           image: AssetImage('images/${widget.roomImg}'),
           colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.9),
+            Colors.black.withOpacity(widget.opacity),
             BlendMode.dstATop,
           ),
           fit: BoxFit.cover,
