@@ -8,13 +8,13 @@ class Device extends StatefulWidget {
       {@required this.icon,
         @required this.label,
         @required this.color,
-        @required this.statusText,
+        @required this.status,
         this.rotationValue});
 
   final String icon;
   final String label;
-  final Color color;
-  final String statusText;
+  Color color;
+  final bool status;
   final int rotationValue;
 
   @override
@@ -37,42 +37,37 @@ class _DeviceState extends State<Device> {
         borderRadius: BorderRadius.circular(10.0),
         color: Colors.white,
       ),
-      child: GestureDetector(
-        onTap: () {
-
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RotatedBox(
-              quarterTurns: widget.rotationValue ?? 0,
-              child: SvgPicture.asset(
-                'images/${widget.icon}',
-                height: 32.0,
-                color: widget.color,
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          RotatedBox(
+            quarterTurns: widget.rotationValue ?? 0,
+            child: SvgPicture.asset(
+              'images/${widget.icon}',
+              height: 32.0,
+              color: widget.color,
             ),
-            SizedBox(
-              height: 15.0,
+          ),
+          SizedBox(
+            height: 15.0,
+          ),
+          Text(
+            widget.label,
+            style: kDeviceNameTextStyle.copyWith(
+              fontWeight: FontWeight.bold,
+              color: widget.color,
             ),
-            Text(
-              widget.label,
-              style: kDeviceNameTextStyle.copyWith(
-                fontWeight: FontWeight.bold,
-                color: widget.color,
-              ),
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          Text(
+            widget.status == true ? 'On' : 'Off',
+            style: kDeviceNameTextStyle.copyWith(
+              color: widget.color,
             ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              widget.statusText,
-              style: kDeviceNameTextStyle.copyWith(
-                color: widget.color,
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

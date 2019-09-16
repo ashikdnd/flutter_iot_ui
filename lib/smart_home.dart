@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:iot/providers/roomprovider.dart';
+import 'package:iot/widgets/roomoverview.dart';
 import 'package:provider/provider.dart';
 import 'package:iot/providers/security.dart';
 import 'dart:async';
 
 import 'package:iot/widgets/devicestatus.dart';
-import 'package:iot/model/devices.dart';
 import 'package:iot/model/rooms.dart';
 import 'constants.dart';
 
@@ -111,6 +112,8 @@ class _SmartHomeState extends State<SmartHome>
   Widget build(BuildContext context) {
 
     final security = Provider.of<Security>(context);
+    final roomProvider = Provider.of<RoomProvider>(context);
+    List roomList = roomProvider.getRooms();
 
     return Scaffold(
       appBar: AppBar(
@@ -218,24 +221,24 @@ class _SmartHomeState extends State<SmartHome>
                   SizedBox(height: 10.0,),
                   // Rooms
                   ListView.builder(
-                    itemCount: rooms.length,
+                    itemCount: roomList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, i) {
                       return Column(
                         children: <Widget>[
-                        // Room Overview
-                        rooms[i],
-                        // Room settings
-                        security.getStatus() == false ? GridView.count(
-                          padding: EdgeInsets.only(bottom: 2.0),
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 4.0,
-                          mainAxisSpacing: 4.0,
-                          shrinkWrap: true,
-                          children: List.generate(deviceList.length, (index) {
-                            return deviceList[index];
-                          }),
-                        ) : SizedBox(),
+                        // Room Overview. Load rooms list from provider
+                        RoomOverview(
+                          temperature: roomList[i]['temperature'],
+                          power: roomList[i]['power'],
+                          humidity: roomList[i]['humidity'],
+                          roomName: roomList[i]['roomName'],
+                          roomImg: roomList[i]['roomImg'],
+                          lastActivity: roomList[i]['lastActivity'],
+                          locked: roomList[i]['locked'],
+                          opacity: roomList[i]['opacity'],
+                          devices: roomList[i]['devices'],
+                          roomIndex: i,
+                        ),
                         i < rooms.length - 1 ? Divider() : SizedBox(),
                         ],
                       );
