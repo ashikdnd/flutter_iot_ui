@@ -73,6 +73,7 @@ class _SmartHomeState extends State<SmartHome>
       securityStatusShadowColor = kArmedShadowColor;
     });
     Provider.of<Security>(context).updateStatus(true);
+    Provider.of<RoomProvider>(context).lockRooms();
   }
 
   void disableSecurity() {
@@ -84,6 +85,7 @@ class _SmartHomeState extends State<SmartHome>
       securityStatusShadowColor = kDisarmedShadowColor;
     });
     Provider.of<Security>(context).updateStatus(false);
+    Provider.of<RoomProvider>(context).unlockRooms();
   }
 
   bool toggleAnimation(type) {

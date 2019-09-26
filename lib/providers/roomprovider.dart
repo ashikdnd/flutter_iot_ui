@@ -11,4 +11,18 @@ class RoomProvider extends ChangeNotifier {
     _roomList[roomIndex]['devices'][deviceIndex]['status'] = !_roomList[roomIndex]['devices'][deviceIndex]['status'];
     notifyListeners();
   }
+
+  lockRooms() {
+    for(int i=0; i<_roomList.length; i++) {
+      _roomList[i]['locked'] = true;
+    }
+    notifyListeners();
+  }
+
+  unlockRooms() {
+    for(int i=0; i<_roomList.length; i++) {
+      _roomList[i]['locked'] = false;
+    }
+    notifyListeners();
+  }
 }

@@ -193,10 +193,18 @@ class _RoomOverviewState extends State<RoomOverview> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          "${widget.roomName}",
-                          style: kBigTextStyle.copyWith(
-                              fontWeight: FontWeight.bold, color: Colors.white),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              widget.roomName,
+                              style: kBigTextStyle.copyWith(
+                                  fontWeight: FontWeight.bold, color: Colors.white),
+                            ),
+                            widget.locked ? Icon(
+                              Icons.settings,
+                              color: Colors.white,
+                            ) : SizedBox(),
+                          ],
                         ),
                         SizedBox(
                           height: 8.0,
