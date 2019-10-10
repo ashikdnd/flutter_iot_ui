@@ -34,7 +34,7 @@ class _DeviceState extends State<Device> {
       decoration: BoxDecoration(
         border: Border.all(width: 1.0, color: Colors.grey[300]),
         borderRadius: BorderRadius.circular(10.0),
-        color: Colors.white,
+        //color: Colors.white,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

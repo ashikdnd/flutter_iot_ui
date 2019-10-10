@@ -235,10 +235,11 @@ class _RoomOverviewState extends State<RoomOverview> {
           shrinkWrap: true,
           physics: ScrollPhysics(),
           children: List.generate(widget.devices.length, (index) {
-            return GestureDetector(
+            return InkWell(
               onTap: () {
                 roomProvider.updateRoomDeviceStatus(widget.roomIndex, index);
               },
+              splashColor: kPrimaryColor,
               child: Device(
                 icon: widget.devices[index]['icon'],
                 label: widget.devices[index]['label'],
